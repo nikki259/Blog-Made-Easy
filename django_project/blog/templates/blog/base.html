@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+	{% if title %}
+	<title>BME - {{ title }}</title>
+	{% else %}
+	<title>BME</title>
+	{% endif %}
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-expand-md navbar-light bg-light">
+            <a class="navbar-brand" href="{% url 'Blog-home' %}" style="padding-left: 0px;">
+              <img class="img-fluid img-rounded img-responsive" src="../../media/logo.png">
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" style="background-color: #FF69B4;">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="nav navbar-nav mr-auto">
+{#                  <li class="nav-item" ><a class="nav-link " href="{% url 'Blog-home' %}" ><strong>Home</strong></a></li>#}
+{#                  <li class="nav-item" ><a class="nav-link " href="{% url 'Blog-about' %}" ><strong>About</strong></a></li>#}
+{#                  <li class="nav-item" ><a class="nav-link " href="{% url 'Blog-contact' %}" ><strong>Contact</strong></a></li>#}
+              </ul>
+            <ul class="nav navbar-nav navbar-auto d-flex mx-auto">
+                <form action="{% url 'search_blog' %}" method="post" class="form-inline my-2 my-lg-0">
+                    {% csrf_token %}
+      <input class="form-control mr-lg-20" type="text" name="search_query" placeholder="Search Blogs here.." aria-label="Search">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form>
+            </ul>
+                <ul class="nav navbar-nav navbar-right">
+
+                    {% if user.is_authenticated %}
+                        <li class="nav-item" ><a class="nav-link" href="{% url 'post-create' %}" ><i class="far fa-plus-square text-success"></i> <strong>New Blog</strong></a></li>
+                        <li class="nav-item" ><a class="nav-link" href="{% url 'profile' %}" ><i class="fas fa-user-alt text-success"></i> <strong>Profile</strong></a></li>
+                        <li class="nav-item" ><a class="nav-link" href="{% url 'logout' %}" ><i class="fas fa-power-off text-success"></i> <strong>Logout</strong></a></li>
+                    {% else %}
+                        <li class="nav-item" ><a class="nav-link" href="{% url 'login' %}" ><i class="fas fa-user-plus text-success"></i> <strong>Login</strong></a></li>
+                    {% endif %}
+
+
+                </ul>
+
+            </div>
+        </nav>
+        <div class="modal fade bd-example-modal-lgcustomer" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                          <div class="modal-dialog modal-md">
+                            <div class="modal-content">
+                              <div class="card card-body">
+                                  <form class="form" method="post" action="#">
+                                     <p class="alert alert-success">Please Enter Following Details To Register</p>
+                                      <input required type="text" name="username" class="form-control" placeholder="Enter Username">
+                                      <br>
+                                        <input required type="password" class="form-control" name="password" placeholder="Enter Password">
+                                        <br>
+                                        <input required type="password" class="form-control" name="re_password" placeholder="Re-enter Password">
+                                        <br>
+                                        <div class="row">
+                                          <input type="submit" name="register_customer" class="d-flex mx-auto btn btn-success" value="Login">
+                                        </div>
+                                  </form>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+<div class="row">
+    <div class="col col-lg-1 col-md-1 col-sm-1"></div>
+    <div class="col col-lg-8 col-md-8 col-sm-8">
+        {% block content %}{% endblock %}
+    </div>
+    <div class="col col-lg-3 col-md-3 col-sm-3">
+        <ul class="list-group">
+          <li class="list-group-item" ><a class="nav-link " href="{% url 'Blog-home' %}" ><strong>Home</strong></a></li>
+            <li class="list-group-item" ><a class="nav-link " href="{% url 'Blog-about' %}" ><strong>About</strong></a></li>
+            <li class="list-group-item" ><a class="nav-link " href="{% url 'Blog-contact' %}" ><strong>Contact</strong></a></li>
+            {% if user.is_authenticated %}
+                <li class="list-group-item" ><a class="nav-link" href="{% url 'profile' %}" ><i class="fas fa-user-alt text-success"></i> <strong>Profile</strong></a></li>
+            {% endif %}
+        </ul>
+    </div>
+</div>
+
+</body>
+</html>

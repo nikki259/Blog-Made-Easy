@@ -1,0 +1,31 @@
+{% extends "blog/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+    <div class="container">
+    <div class="card card-body">
+        <div class="content-section">
+      <div class="row">
+        <img class="img-rounded img-fluid img-responsive" style="width: 250px;height: 250px;" src="{{ user.profile.image.url }}">
+        <div class="card card-body">
+          <h2 class="account-heading">{{ user.username }}</h2>
+          <p class="text-secondary">{{ user.email }}</p>
+        </div>
+      </div>
+        <form class="form" method="post" enctype="multipart/form-data">
+         {% csrf_token %}
+         <p class="alert alert-success">Enter Following Details To Update</p>
+         {{ u_form|crispy }}
+         {{ p_form|crispy }}
+         <div class="row">
+             <input type="submit" name="register_customer" class="d-flex mx-auto btn btn-success" value="Update">
+         </div>
+{#         <div class="row">#}
+{#             <p class="text-muted text-primary d-flex mx-auto">Already Have Account??<a href="{% url 'login' %}">SignIn here</a></p>#}
+{#         </div>#}
+
+     </form>
+      <!-- FORM HERE -->
+    </div>
+    </div>
+    </div>
+{% endblock content %}
